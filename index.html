@@ -331,6 +331,42 @@
                 <div class="feedback-desc" id="feedbackDesc">선택한 보기가 정답입니다.</div>
               </div>
 
+              <!-- Explanation Search & Memo Section -->
+              <div class="explanation-section" id="qExplanationSection" style="margin-top: 1.5rem;">
+                <div class="explanation-actions-row">
+                  <span class="exp-label">💡 해설 및 풀이 참고:</span>
+                  <div class="exp-search-buttons">
+                    <button type="button" class="btn-search-exp btn-search-cbt" id="searchCbtBtn" title="전자문제집 comcbt에서 해설 검색">
+                      <span>🔍 comcbt 해설</span>
+                    </button>
+                    <button type="button" class="btn-search-exp btn-search-google" id="searchGoogleBtn" title="구글에서 문제 풀이 검색">
+                      <span>🌐 구글 검색</span>
+                    </button>
+                    <button type="button" class="btn-search-exp btn-toggle-memo" id="toggleMemoBtn" title="나만의 오답 해설 및 메모 작성">
+                      <span>📝 나만의 해설 작성</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- User Saved Memo Display -->
+                <div class="user-memo-display" id="userMemoDisplay" style="display: none;">
+                  <div class="memo-header">
+                    <span class="memo-title">📝 내가 작성한 해설 / 암기 노트</span>
+                    <button type="button" class="memo-edit-btn" id="editMemoBtn">수정</button>
+                  </div>
+                  <div class="memo-body" id="userMemoContent"></div>
+                </div>
+
+                <!-- User Memo Input Area (collapsible) -->
+                <div class="user-memo-editor" id="userMemoEditor" style="display: none;">
+                  <textarea id="userMemoInput" placeholder="이 문제의 풀이 공식, 핵심 개념, 오답 이유를 적어두면 다음번에 자동으로 표시됩니다..." rows="3"></textarea>
+                  <div class="memo-editor-actions">
+                    <button type="button" class="btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.82rem;" id="cancelMemoBtn">취소</button>
+                    <button type="button" class="btn-primary" style="padding: 0.4rem 1rem; font-size: 0.82rem;" id="saveMemoBtn">해설 저장하기</button>
+                  </div>
+                </div>
+              </div>
+
               <!-- Nav Bottom Actions -->
               <div class="question-nav-bar">
                 <div class="nav-buttons-left">

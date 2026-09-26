@@ -27,6 +27,7 @@
     // Persistent Data (from localStorage)
     wrongNotes: {}, // { [questionKey]: questionObject }
     bookmarks: {}, // { [questionKey]: questionObject }
+    userMemos: {}, // { [questionKey]: string (user note) }
     stats: {
       totalSolved: 0,
       totalCorrect: 0,
@@ -58,6 +59,9 @@
         const savedBookmarks = localStorage.getItem('vibecbt_bookmarks');
         if (savedBookmarks) state.bookmarks = JSON.parse(savedBookmarks);
         
+        const savedMemos = localStorage.getItem('vibecbt_user_memos');
+        if (savedMemos) state.userMemos = JSON.parse(savedMemos);
+
         const savedStats = localStorage.getItem('vibecbt_stats');
         if (savedStats) state.stats = JSON.parse(savedStats);
       } catch (e) {
@@ -72,6 +76,9 @@
       localStorage.setItem('vibecbt_bookmarks', JSON.stringify(state.bookmarks));
       UI.updateBadgeCounts();
     },
+    saveUserMemos() {
+      localStorage.setItem('vibecbt_user_memos', JSON.stringify(state.userMemos));
+    },
     saveStats() {
       localStorage.setItem('vibecbt_stats', JSON.stringify(state.stats));
       UI.renderDashboardStats();
@@ -82,6 +89,7 @@
         date: new Date().toISOString(),
         wrongNotes: state.wrongNotes,
         bookmarks: state.bookmarks,
+        userMemos: state.userMemos,
         stats: state.stats
       };
       const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
@@ -99,9 +107,11 @@
           const imported = JSON.parse(e.target.result);
           if (imported.wrongNotes) state.wrongNotes = imported.wrongNotes;
           if (imported.bookmarks) state.bookmarks = imported.bookmarks;
+          if (imported.userMemos) state.userMemos = imported.userMemos;
           if (imported.stats) state.stats = imported.stats;
           Storage.saveWrongNotes();
           Storage.saveBookmarks();
+          Storage.saveUserMemos();
           Storage.saveStats();
           alert('데이터를 성공적으로 복원했습니다!');
         } catch (err) {
@@ -597,6 +607,64 @@
         feedbackBox.classList.remove('active');
       }
 
+      // Explanation & Memo Section Handling
+      const savedMemo = state.userMemos[qKey];
+      const memoDisplay = document.getElementById('userMemoDisplay');
+      const memoEditor = document.getElementById('userMemoEditor');
+      const memoContent = document.getElementById('userMemoContent');
+      const memoInput = document.getElementById('userMemoInput');
+
+      if (savedMemo) {
+        memoDisplay.style.display = 'block';
+        memoContent.textContent = savedMemo;
+        memoEditor.style.display = 'none';
+      } else {
+        memoDisplay.style.display = 'none';
+        memoEditor.style.display = 'none';
+      }
+
+      // Bind search buttons
+      document.getElementById('searchCbtBtn').onclick = () => {
+        const query = `site:comcbt.com 정보통신기사 ${q.question.slice(0, 35)}`;
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+      };
+
+      document.getElementById('searchGoogleBtn').onclick = () => {
+        const query = `정보통신기사 ${q.question.slice(0, 45)}`;
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+      };
+
+      // Toggle Memo Editor
+      document.getElementById('toggleMemoBtn').onclick = () => {
+        const isEditing = memoEditor.style.display === 'flex';
+        memoEditor.style.display = isEditing ? 'none' : 'flex';
+        if (!isEditing) {
+          memoInput.value = savedMemo || '';
+          memoInput.focus();
+        }
+      };
+
+      document.getElementById('editMemoBtn').onclick = () => {
+        memoEditor.style.display = 'flex';
+        memoInput.value = savedMemo || '';
+        memoInput.focus();
+      };
+
+      document.getElementById('cancelMemoBtn').onclick = () => {
+        memoEditor.style.display = 'none';
+      };
+
+      document.getElementById('saveMemoBtn').onclick = () => {
+        const text = memoInput.value.trim();
+        if (text) {
+          state.userMemos[qKey] = text;
+        } else {
+          delete state.userMemos[qKey];
+        }
+        Storage.saveUserMemos();
+        UI.renderCurrentQuestion();
+      };
+
       // Nav buttons state
       document.getElementById('prevQBtn').disabled = state.currentIndex === 0;
       document.getElementById('nextQBtn').disabled = state.currentIndex === state.activeQuestions.length - 1;
@@ -898,6 +966,14 @@
       listEl.innerHTML = '';
 
       items.forEach(q => {
+        const qKey = getQKey(q);
+        const savedMemo = state.userMemos[qKey];
+        const memoHtml = savedMemo ? `
+          <div style="margin-top: 0.6rem; padding: 0.6rem 0.8rem; background: rgba(245, 158, 11, 0.08); border-left: 3px solid #fbbf24; border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">
+            <strong style="color: #fbbf24;">📝 나의 해설:</strong> ${savedMemo}
+          </div>
+        ` : '';
+
         const card = document.createElement('div');
         card.className = 'note-item-card';
         card.innerHTML = `
@@ -907,18 +983,24 @@
               <span class="q-badge year-badge">${q.examDate}</span>
               <span class="q-badge">Q.${q.id}</span>
             </div>
-            <button type="button" class="btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;" data-del="${getQKey(q)}">
-              삭제
-            </button>
+            <div style="display: flex; gap: 0.4rem;">
+              <button type="button" class="btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.78rem;" onclick="window.open('https://www.google.com/search?q=' + encodeURIComponent('site:comcbt.com 정보통신기사 ' + '${q.question.slice(0, 30)}'), '_blank')">
+                comcbt 해설
+              </button>
+              <button type="button" class="btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.78rem;" data-del="${qKey}">
+                삭제
+              </button>
+            </div>
           </div>
           <div class="note-q-title">${q.question}</div>
           <div style="font-size: 0.9rem; color: #10b981; font-weight: 600;">
             정답: ${q.answer}번 (${['①','②','③','④'][q.answer - 1]})
           </div>
+          ${memoHtml}
         `;
         card.querySelector('[data-del]').onclick = (e) => {
           e.stopPropagation();
-          delete state.wrongNotes[getQKey(q)];
+          delete state.wrongNotes[qKey];
           Storage.saveWrongNotes();
           UI.renderWrongNotesView();
         };
@@ -942,6 +1024,14 @@
       listEl.innerHTML = '';
 
       items.forEach(q => {
+        const qKey = getQKey(q);
+        const savedMemo = state.userMemos[qKey];
+        const memoHtml = savedMemo ? `
+          <div style="margin-top: 0.6rem; padding: 0.6rem 0.8rem; background: rgba(245, 158, 11, 0.08); border-left: 3px solid #fbbf24; border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">
+            <strong style="color: #fbbf24;">📝 나의 해설:</strong> ${savedMemo}
+          </div>
+        ` : '';
+
         const card = document.createElement('div');
         card.className = 'note-item-card';
         card.innerHTML = `
@@ -951,7 +1041,7 @@
               <span class="q-badge year-badge">${q.examDate}</span>
               <span class="q-badge">Q.${q.id}</span>
             </div>
-            <button type="button" class="btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;" data-del="${getQKey(q)}">
+            <button type="button" class="btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;" data-del="${qKey}">
               해제
             </button>
           </div>
@@ -959,10 +1049,11 @@
           <div style="font-size: 0.9rem; color: #10b981; font-weight: 600;">
             정답: ${q.answer}번 (${['①','②','③','④'][q.answer - 1]})
           </div>
+          ${memoHtml}
         `;
         card.querySelector('[data-del]').onclick = (e) => {
           e.stopPropagation();
-          delete state.bookmarks[getQKey(q)];
+          delete state.bookmarks[qKey];
           Storage.saveBookmarks();
           UI.renderBookmarksView();
         };
