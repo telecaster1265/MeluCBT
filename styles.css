@@ -1545,6 +1545,38 @@ html, body {
   cursor: pointer;
 }
 
+/* System Explanation Box */
+.system-explanation-box {
+  margin-top: 1.5rem;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+.sys-exp-header {
+  margin-bottom: 0.6rem;
+}
+.sys-exp-badge {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.2);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.sys-exp-content {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  user-select: text;
+}
+
 /* Explanation & Memo Section */
 .explanation-section {
   background: rgba(255, 255, 255, 0.02);

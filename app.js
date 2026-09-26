@@ -607,6 +607,16 @@
         feedbackBox.classList.remove('active');
       }
 
+      // System Expert Explanation Rendering
+      const sysExpBox = document.getElementById('systemExplanationBox');
+      const sysExpContent = document.getElementById('systemExplanationContent');
+      if (isChecked && q.explanation) {
+        sysExpBox.style.display = 'block';
+        sysExpContent.textContent = q.explanation;
+      } else {
+        sysExpBox.style.display = 'none';
+      }
+
       // Explanation & Memo Section Handling
       const savedMemo = state.userMemos[qKey];
       const memoDisplay = document.getElementById('userMemoDisplay');
@@ -996,6 +1006,11 @@
           <div style="font-size: 0.9rem; color: #10b981; font-weight: 600;">
             정답: ${q.answer}번 (${['①','②','③','④'][q.answer - 1]})
           </div>
+          ${q.explanation ? `
+            <div style="margin-top: 0.6rem; padding: 0.6rem 0.8rem; background: rgba(99, 102, 241, 0.08); border-left: 3px solid #6366f1; border-radius: 4px; font-size: 0.85rem; color: var(--text-primary); line-height: 1.5;">
+              <strong style="color: #a5b4fc;">💡 핵심 해설:</strong> ${q.explanation}
+            </div>
+          ` : ''}
           ${memoHtml}
         `;
         card.querySelector('[data-del]').onclick = (e) => {
