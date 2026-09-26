@@ -1,6 +1,6 @@
 {
-  "name": "정보통신기사 CBT 마스터",
-  "short_name": "정보통신CBT",
+  "name": "MeluCBT - 정보통신기사 필기",
+  "short_name": "MeluCBT",
   "description": "정보통신기사 필기 2,300 기출문제 완벽 대비 개인 맞춤형 CBT",
   "start_url": "./index.html",
   "display": "standalone",

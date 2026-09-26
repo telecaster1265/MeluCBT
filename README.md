@@ -1,6 +1,6 @@
-# 📡 VibeCBT - 정보통신기사 필기 기출문제 개인 CBT
+# 📡 MeluCBT - 정보통신기사 필기 기출문제 개인 CBT
 
-> **2016년~2023년 총 23개 회차, 2,300개 기출문제**와 **424개의 고해상도 회로도/도표/수식 이미지**를 완벽하게 복원한 개인 맞춤형 웹 CBT 학습 사이트입니다.
+> **2016년~2023년 총 23개 회차, 2,300개 기출문제**와 **424개의 고해상도 회로도/도표/수식 이미지**, 그리고 **전 문항 핵심 공학 해설**을 완벽하게 탑재한 개인 맞춤형 웹 CBT 학습 사이트입니다.
 > 
 > 로그인 및 데이터베이스 없이 순수 정적 파일(HTML5 + Vanilla CSS + Vanilla JS)로 동작하며, **GitHub Pages** 등을 통해 무료로 영구 배포할 수 있습니다. PC와 모바일 브라우저 모두에 완벽 대응하는 반응형 디자인 및 PWA(홈 화면에 추가)를 지원합니다.
 
@@ -88,7 +88,7 @@ python -m http.server 8080
    git add .
    git commit -m "Initial commit: VibeCBT completed"
    git branch -M main
-   git remote add origin https://github.com/<사용자아이디>/VibeCBT.git
+   git remote add origin https://github.com/<사용자아이디>/MeluCBT.git
    git push -u origin main
    ```
 3. **GitHub Pages 활성화**:
@@ -96,7 +96,7 @@ python -m http.server 8080
    - 좌측 메뉴에서 **Pages**를 클릭합니다.
    - **Build and deployment > Branch** 항목에서 `main` 브랜치 / `/ (root)` 폴더를 선택하고 **Save**를 누릅니다.
 4. **접속**:
-   - 1~2분 후 생성되는 URL (`https://<사용자아이디>.github.io/VibeCBT/`)로 PC와 모바일 어디서나 접속하여 사용할 수 있습니다.
+   - 1~2분 후 생성되는 URL (`https://<사용자아이디>.github.io/MeluCBT/`)로 PC와 모바일 어디서나 접속하여 사용할 수 있습니다.
 
 ---
 

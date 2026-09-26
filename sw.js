@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vibecbt-v1';
+const CACHE_NAME = 'melucbt-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

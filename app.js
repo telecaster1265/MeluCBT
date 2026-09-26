@@ -1,5 +1,5 @@
 /**
- * VibeCBT - Core Application Logic
+ * MeluCBT - Core Application Logic
  * Author: Antigravity
  */
 
@@ -96,7 +96,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `VibeCBT_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `MeluCBT_Backup_${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
     },
