@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>정보통신기사 필기 CBT 마스터 | 2,300 기출문제 완벽 대비</title>
+  <meta name="description" content="2016년~2023년 23회차 2,300 기출문제 완벽 복원! 회로도·도표 고해상도 지원, 실전 모의고사 150분 OMR, 오답노트 자동 저장 무료 CBT 학습 사이트">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="정보통신CBT">
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:title" content="정보통신기사 필기 CBT 마스터">
+  <meta property="og:description" content="로그인/DB 없이 누구나 브라우저에서 바로 푸는 2,300 기출문제 개인 CBT 플랫폼">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon & PWA -->
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient Light Effect -->
+  <div class="bg-ambient" aria-hidden="true">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Top Global Header -->
+    <header class="app-header">
+      <div class="header-inner">
+        <!-- Logo -->
+        <div class="logo-area" data-nav="home" id="siteLogo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="logo-title">VibeCBT</span>
+            <span class="logo-subtitle">정보통신기사 필기 마스터</span>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="nav-menu">
+          <button type="button" class="nav-item active" data-nav="home">홈</button>
+          <button type="button" class="nav-item" data-nav="practiceSetup">스마트 연습</button>
+          <button type="button" class="nav-item" onclick="UI.startExamMode(100, 150)">실전 모의고사</button>
+          <button type="button" class="nav-item" data-nav="examHistory">기출 회차별</button>
+          <button type="button" class="nav-item" data-nav="wrongNotes">오답노트</button>
+          <button type="button" class="nav-item" data-nav="bookmarks">북마크</button>
+        </nav>
+
+        <!-- Right Quick Actions -->
+        <div class="header-actions">
+          <button type="button" class="icon-btn" data-nav="bookmarks" title="북마크 문제" id="headerBookmarkBtn">
+            <span>⭐</span>
+            <span class="badge-count" id="bookmarkBadge" style="display:none;">0</span>
+          </button>
+          <button type="button" class="icon-btn" data-nav="wrongNotes" title="오답노트" id="headerWrongBtn">
+            <span>📕</span>
+            <span class="badge-count" id="wrongBadge" style="display:none;">0</span>
+          </button>
+          <button type="button" class="icon-btn" id="themeToggleBtn" title="다크/라이트 모드 전환">
+            <span id="themeIcon">🌓</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Content Area -->
+    <main class="main-content">
+
+      <!-- ==========================================
+           VIEW 1: HOME DASHBOARD
+           ========================================== -->
+      <section class="view-panel active" id="viewHome">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+          <div class="hero-content">
+            <div class="hero-badge">
+              <span>🚀 2016~2023년 23회차 전량 복원 완료</span>
+            </div>
+            <h1 class="hero-title">
+              정보통신기사 필기<br>
+              <span>가장 완벽한 실전 CBT</span>
+            </h1>
+            <p class="hero-desc">
+              회로도·파형도·수식 이미지 424장 완벽 연동! 로그인/DB 없이 브라우저에서 바로 푸는
+              스마트 기출 연습 및 실전 150분 OMR 모의고사.
+            </p>
+            <div class="hero-stats-row">
+              <div class="hero-stat-card">
+                <span class="stat-value" id="dashTotalQuestions">2,300</span>
+                <span class="stat-label">총 수록 문항</span>
+              </div>
+              <div class="hero-stat-card">
+                <span class="stat-value" id="dashTotalSolved">0</span>
+                <span class="stat-label">누적 풀이 문항</span>
+              </div>
+              <div class="hero-stat-card">
+                <span class="stat-value" id="dashAccuracy">0%</span>
+                <span class="stat-label">평균 정답률</span>
+              </div>
+              <div class="hero-stat-card">
+                <span class="stat-value" id="dashWrongCount">0</span>
+                <span class="stat-label">오답노트 문항</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Primary Modes Grid -->
+        <div class="section-heading">
+          <h2 class="section-title">⚡ 학습 모드 선택</h2>
+        </div>
+        <div class="modes-grid">
+          <!-- Mode 1: Smart Practice -->
+          <div class="mode-card card-practice" data-nav="practiceSetup">
+            <div class="mode-icon">⚡</div>
+            <h3 class="mode-title">스마트 랜덤 연습</h3>
+            <p class="mode-desc">
+              원하는 과목, 연도(최근 5년 우선) 및 문제 수를 자유롭게 골라 즉시 채점하며 빠르게 학습합니다.
+            </p>
+            <div class="mode-footer">
+              <span class="mode-tag">과목/연도 필터링</span>
+              <span class="mode-action-btn">설정 및 시작 →</span>
+            </div>
+          </div>
+
+          <!-- Mode 2: Real Exam Simulation -->
+          <div class="mode-card card-exam" onclick="UI.startExamMode(100, 150)">
+            <div class="mode-icon">⏱️</div>
+            <h3 class="mode-title">실전 모의고사 (100제)</h3>
+            <p class="mode-desc">
+              실제 시험과 동일하게 5개 과목 100문항, 150분 타이머, 실시간 OMR 답안지 마킹 및 과락/합격 자동 판정.
+            </p>
+            <div class="mode-footer">
+              <span class="mode-tag">150분 실전 시험</span>
+              <span class="mode-action-btn">모의고사 응시 →</span>
+            </div>
+          </div>
+
+          <!-- Mode 3: Wrong Notes -->
+          <div class="mode-card card-wrong" data-nav="wrongNotes">
+            <div class="mode-icon">📕</div>
+            <h3 class="mode-title">오답노트 복습</h3>
+            <p class="mode-desc">
+              틀렸던 문제만 자동으로 누적 저장되어 취약점을 완벽하게 극복할 때까지 반복 학습합니다.
+            </p>
+            <div class="mode-footer">
+              <span class="mode-tag">자동 누적 관리</span>
+              <span class="mode-action-btn">오답 확인하기 →</span>
+            </div>
+          </div>
+
+          <!-- Mode 4: Exam History -->
+          <div class="mode-card card-history" data-nav="examHistory">
+            <div class="mode-icon">📅</div>
+            <h3 class="mode-title">기출 회차별 정주행</h3>
+            <p class="mode-desc">
+              2023년 최신 회차부터 2016년 회차까지 특정 연도/회차를 통째로 1번부터 100번까지 정주행합니다.
+            </p>
+            <div class="mode-footer">
+              <span class="mode-tag">23개 전 회차 수록</span>
+              <span class="mode-action-btn">회차 목록 보기 →</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Backup & Restore Area -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem;">💾 학습 기록 백업 & 복원</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted);">오답노트와 학습 통계를 기기간 이전하거나 안전하게 JSON 파일로 보관하세요.</div>
+          </div>
+          <div style="display: flex; gap: 0.6rem;">
+            <button type="button" class="btn-secondary" id="exportBackupBtn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">백업 다운로드</button>
+            <label class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; cursor: pointer; margin: 0;">
+              백업 불러오기
+              <input type="file" id="importBackupInput" accept=".json" style="display: none;">
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           VIEW 2: PRACTICE SETUP
+           ========================================== -->
+      <section class="view-panel" id="viewPracticeSetup">
+        <div class="setup-container">
+          <div class="setup-header">
+            <h2 class="setup-title">⚡ 스마트 랜덤 연습 설정</h2>
+            <p class="setup-subtitle">원하는 과목과 연도를 선택하여 맞춤형 문제집을 구성하세요.</p>
+          </div>
+
+          <!-- Subject Selection -->
+          <div class="setup-group">
+            <div class="group-label">
+              <span>과목 선택</span>
+              <span class="label-action" onclick="document.querySelectorAll('#practiceSubjectChips .chip').forEach(c => c.classList.add('active')); UI.updateFilterSubjects();">전체 선택</span>
+            </div>
+            <div class="chip-grid" id="practiceSubjectChips">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Year Selection -->
+          <div class="setup-group">
+            <div class="group-label">
+              <span>출제 연도 선택 (기본: 최근 5년 우선)</span>
+              <div style="display: flex; gap: 0.75rem;">
+                <span class="label-action" onclick="document.querySelectorAll('#practiceYearChips .chip').forEach(c => { const y = parseInt(c.dataset.year); c.classList.toggle('active', y >= 2019); }); UI.updateFilterYears();">최근 5년(2019~2023)만</span>
+                <span class="label-action" onclick="document.querySelectorAll('#practiceYearChips .chip').forEach(c => c.classList.add('active')); UI.updateFilterYears();">전체 선택</span>
+              </div>
+            </div>
+            <div class="chip-grid" id="practiceYearChips">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Question Count Selection -->
+          <div class="setup-group">
+            <div class="group-label">
+              <span>풀이 문항 수</span>
+            </div>
+            <div class="chip-grid" id="practiceCountChips">
+              <div class="chip" onclick="UI.startPracticeMode({count: 10})">10문제</div>
+              <div class="chip active" onclick="UI.startPracticeMode({count: 20})">20문제 (추천)</div>
+              <div class="chip" onclick="UI.startPracticeMode({count: 30})">30문제</div>
+              <div class="chip" onclick="UI.startPracticeMode({count: 50})">50문제</div>
+              <div class="chip" onclick="UI.startPracticeMode({count: 'all'})">전체 문제</div>
+            </div>
+          </div>
+
+          <!-- Start Action Area -->
+          <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(99, 102, 241, 0.08); border: 1px dashed rgba(99, 102, 241, 0.3); border-radius: var(--radius-md); font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
+            선택된 조건에 맞는 가용 문항: <strong style="color: #6366f1;" id="filteredAvailableCount">0</strong>개
+          </div>
+
+          <div class="start-btn-area">
+            <button type="button" class="btn-secondary" data-nav="home">뒤로 가기</button>
+            <button type="button" class="btn-primary" onclick="UI.startPracticeMode({count: 20})">
+              <span>🚀 연습 시작하기</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           VIEW 3: QUIZ & EXAM SOLVING WORKSPACE
+           ========================================== -->
+      <section class="view-panel" id="viewQuiz">
+        <div class="quiz-workspace">
+          <!-- Quiz Top Info Bar -->
+          <div class="quiz-top-bar">
+            <div class="top-bar-left">
+              <span class="exam-title-badge" id="quizExamTitle">스마트 연습</span>
+              <div class="timer-box" id="examTimerBox" style="display: none;">
+                <span>⏱️</span>
+                <span id="timerDisplay">150:00</span>
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+              <div class="progress-meta">
+                <span>풀이 진행률</span>
+                <span id="quizProgressText">1 / 20</span>
+              </div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="quizProgressBarFill" style="width: 5%;"></div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <!-- Mobile OMR Sheet Button -->
+              <button type="button" class="omr-mobile-toggle-btn" id="omrMobileToggle">
+                <span>📋 답안지</span>
+              </button>
+              <button type="button" class="btn-nav btn-toggle-answer" id="toggleAnswerBtn" onclick="UI.toggleCheckAnswer()">
+                <span>💡 정답 확인</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Main Question Card Area -->
+          <div class="question-main-area">
+            <article class="question-card" id="currentQuestionCard">
+              <!-- Meta Badges & Bookmark -->
+              <div class="question-meta-row">
+                <div class="meta-badges">
+                  <span class="q-badge subject-badge" id="qSubjectBadge">1과목 : 디지털 전자회로</span>
+                  <span class="q-badge year-badge" id="qYearBadge">2020년 기출</span>
+                  <span class="q-badge" id="qCurrentNum">1 / 100</span>
+                </div>
+                <div class="meta-actions">
+                  <button type="button" class="bookmark-btn" id="qBookmarkBtn" onclick="UI.toggleBookmark()" title="북마크 (단축키: B)">☆</button>
+                </div>
+              </div>
+
+              <!-- Question Title & Body -->
+              <div class="question-content">
+                <h3 class="question-number-title">
+                  <span class="q-id-num" id="qNumberLabel">1.</span>
+                  <span id="qTextContent">문제 지문 로딩 중...</span>
+                </h3>
+
+                <!-- Question Diagram Image (if any) -->
+                <div class="question-image-wrap" id="qImageWrap" style="display: none;">
+                  <img src="" alt="문제 관련 도표" class="question-img" id="qImage">
+                  <span class="img-zoom-tip">🔍 클릭 시 고해상도 확대</span>
+                </div>
+              </div>
+
+              <!-- Options Area (Text list or 2x2 Image grid) -->
+              <div id="qOptionsContainer" class="options-list">
+                <!-- Dynamically populated options -->
+              </div>
+
+              <!-- Immediate Feedback Box (Practice Mode) -->
+              <div class="feedback-box" id="qFeedbackBox">
+                <div class="feedback-title" id="feedbackTitle">✓ 정답입니다!</div>
+                <div class="feedback-desc" id="feedbackDesc">선택한 보기가 정답입니다.</div>
+              </div>
+
+              <!-- Nav Bottom Actions -->
+              <div class="question-nav-bar">
+                <div class="nav-buttons-left">
+                  <button type="button" class="btn-nav" id="prevQBtn" onclick="UI.navigateQuestion(-1)">
+                    <span>← 이전 문제</span>
+                  </button>
+                  <button type="button" class="btn-nav" id="nextQBtn" onclick="UI.navigateQuestion(1)">
+                    <span>다음 문제 →</span>
+                  </button>
+                </div>
+                <div class="nav-buttons-right">
+                  <span style="font-size: 0.8rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.4rem;">
+                    ⌨️ 1~4: 보기 선택 | ← →: 문제 이동 | Enter: 정답 확인
+                  </span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- OMR Sheet Sidebar -->
+          <aside class="omr-sidebar" id="omrSidebar">
+            <div class="omr-header">
+              <div class="omr-title">
+                <span>📋 OMR 답안지</span>
+              </div>
+              <div class="omr-stats">
+                마킹: <span id="omrAnsweredCount">0</span> / <span id="omrTotalCount">100</span>
+              </div>
+            </div>
+
+            <div class="omr-scroll-area" id="omrScrollArea">
+              <!-- Dynamically populated 1..100 rows -->
+            </div>
+
+            <div class="omr-footer" id="omrFooter">
+              <button type="button" class="btn-submit-exam" id="submitExamBtn" onclick="UI.submitExam()" style="display: none;">
+                📝 시험 최종 제출하기
+              </button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           VIEW 4: EXAM HISTORY (23 SESSIONS)
+           ========================================== -->
+      <section class="view-panel" id="viewExamHistory">
+        <div class="section-heading">
+          <h2 class="section-title">📅 기출 회차별 정주행 (총 23회차)</h2>
+          <span style="font-size: 0.88rem; color: var(--text-muted);">원하는 시험 회차를 선택하여 실제 기출 순서(1~100번)대로 풀어보세요.</span>
+        </div>
+        <div class="modes-grid" id="examHistoryGrid">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- ==========================================
+           VIEW 5: INCORRECT NOTES
+           ========================================== -->
+      <section class="view-panel" id="viewWrongNotes">
+        <div class="list-view-header">
+          <div>
+            <h2 class="section-title">📕 오답노트 보관함</h2>
+            <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.2rem;">
+              문제를 풀면서 틀렸던 문항들이 자동으로 누적 저장됩니다.
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn-primary" onclick="UI.startWrongNotesQuiz()" style="padding: 0.65rem 1.25rem; font-size: 0.9rem;">
+              <span>⚡ 오답만 모아 풀기</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="notes-grid" id="wrongNotesList">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div class="empty-state" id="wrongNotesEmpty" style="display: none;">
+          <div class="empty-icon">🎉</div>
+          <div class="empty-text">오답노트가 비어 있습니다!</div>
+          <div>문제를 풀다가 틀린 문제가 생기면 이곳에 자동으로 누적됩니다.</div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           VIEW 6: BOOKMARKS
+           ========================================== -->
+      <section class="view-panel" id="viewBookmarks">
+        <div class="list-view-header">
+          <div>
+            <h2 class="section-title">⭐ 북마크 중요 문제</h2>
+            <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.2rem;">
+              별표(★)를 눌러 즐겨찾기한 핵심 문제들을 모아봅니다.
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn-primary" onclick="UI.startBookmarksQuiz()" style="padding: 0.65rem 1.25rem; font-size: 0.9rem;">
+              <span>⭐ 북마크 문제 풀기</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="notes-grid" id="bookmarksList">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div class="empty-state" id="bookmarksEmpty" style="display: none;">
+          <div class="empty-icon">⭐</div>
+          <div class="empty-text">북마크한 문제가 없습니다.</div>
+          <div>문제 풀이 중 별 아이콘을 눌러 중요한 문제를 저장해 보세요.</div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+      <button type="button" class="mobile-nav-btn active" data-nav="home">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>홈</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-nav="practiceSetup">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.05.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.01-4.09l-2.46-1.46C16.12 17.84 14.2 19 12 19z"/></svg>
+        <span>연습</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" onclick="UI.startExamMode(100, 150)">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        <span>모의고사</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-nav="wrongNotes">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <span>오답</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-nav="examHistory">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg>
+        <span>회차별</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ==========================================
+       MODAL: EXAM RESULT SCORECARD
+       ========================================== -->
+  <div class="modal-overlay" id="resultModal">
+    <div class="modal-dialog">
+      <button type="button" class="modal-close-btn" id="resultModalClose">✕</button>
+      <div class="result-header">
+        <span class="result-badge pass" id="resultBadge">🎉 최종 합격</span>
+        <div class="result-score-big" id="resultScoreBig">85점</div>
+        <div class="result-summary-text" id="resultSummaryText">
+          총 100문항 중 85문항 정답 (정답률 85%)
+        </div>
+      </div>
+
+      <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">
+        과목별 점수 분석 (과락 기준: 40점 미만)
+      </div>
+      <div class="subject-breakdown" id="resultSubjectBreakdown">
+        <!-- Dynamically populated rows -->
+      </div>
+
+      <div class="result-btn-row">
+        <button type="button" class="btn-secondary" onclick="document.getElementById('resultModal').classList.remove('active');" style="flex: 1;">
+          문제 및 정답 검토
+        </button>
+        <button type="button" class="btn-primary" onclick="document.getElementById('resultModal').classList.remove('active'); UI.startWrongNotesQuiz();" style="flex: 1;">
+          오답노트 복습하기 →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL: IMAGE LIGHTBOX ZOOM
+       ========================================== -->
+  <div class="modal-overlay" id="lightboxModal">
+    <div class="modal-dialog lightbox-dialog">
+      <button type="button" class="modal-close-btn">✕</button>
+      <img src="" alt="확대 도표" class="lightbox-img" id="lightboxImg">
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>

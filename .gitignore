@@ -1,0 +1,21 @@
+# 1. 대용량 원본 파일 및 압축 파일 (웹 서비스에 불필요)
+*.zip
+pdf_files/
+
+# 2. 파이썬 추출 도중 생성된 캐시 및 임시 파일
+__pycache__/
+*.py[cod]
+*$py.class
+sample_*.json
+extraction_summary.json
+
+# 3. 운영체제 및 에디터 설정 파일
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 4. 로그 파일
+*.log

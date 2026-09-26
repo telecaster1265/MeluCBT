@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="50%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#0f172a"/>
+  <!-- Radio wave circles -->
+  <circle cx="256" cy="270" r="160" fill="none" stroke="#38bdf8" stroke-width="12" stroke-linecap="round" stroke-dasharray="140 100" opacity="0.3"/>
+  <circle cx="256" cy="270" r="110" fill="none" stroke="#818cf8" stroke-width="16" stroke-linecap="round" stroke-dasharray="110 70" opacity="0.6"/>
+  <circle cx="256" cy="270" r="60" fill="url(#circleGrad)"/>
+  <!-- Central checkmark antenna -->
+  <path d="M256 120 L256 220" stroke="#f8fafc" stroke-width="20" stroke-linecap="round"/>
+  <path d="M210 160 L256 120 L302 160" fill="none" stroke="#f8fafc" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Checkmark in center -->
+  <path d="M236 270 L250 284 L278 254" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bottom CBT text badge -->
+  <rect x="146" y="380" width="220" height="54" rx="27" fill="url(#grad)"/>
+  <text x="256" y="416" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="3">VIBE CBT</text>
+</svg>
