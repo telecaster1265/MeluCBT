@@ -746,6 +746,7 @@
       if (newIdx >= 0 && newIdx < state.activeQuestions.length) {
         state.currentIndex = newIdx;
         this.renderCurrentQuestion();
+        document.getElementById('viewQuiz').scrollIntoView({ block: 'start' });
       }
     },
 
