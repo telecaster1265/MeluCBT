@@ -1507,6 +1507,9 @@ html, body {
   }
   .question-card {
     padding: 1.5rem 1.25rem;
+    /* A backdrop filter makes fixed descendants relative to this card. */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   #viewQuiz {
     padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));

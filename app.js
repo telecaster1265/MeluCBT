@@ -1102,11 +1102,18 @@
 
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('ServiceWorker registered:', reg.scope))
-          .catch(err => console.log('ServiceWorker registration failed:', err));
-      });
+      // initApp awaits question data, so the load event may already have fired.
+      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' })
+        .then(reg => {
+          console.log('ServiceWorker registered:', reg.scope);
+          reg.update().catch(err => console.log('ServiceWorker update failed:', err));
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+              reg.update().catch(err => console.log('ServiceWorker update failed:', err));
+            }
+          });
+        })
+        .catch(err => console.log('ServiceWorker registration failed:', err));
     }
   }
 
